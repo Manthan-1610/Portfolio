@@ -101,6 +101,16 @@ export default function Home() {
   };
 
   const handleCastSpell = (spell: "lumos" | "leviosa" | "finite") => {
+    // Prevent re-triggering sound and animation if the spell is already active
+    if (spell !== "finite" && activeSpell === spell) {
+      return;
+    }
+
+    // Prevent dispelling if no spell is currently active
+    if (spell === "finite" && !activeSpell) {
+      return;
+    }
+
     // 1. Play authentic Harry Potter spell sound effect via Web Audio
     playMagicalSpellSound(spell);
 

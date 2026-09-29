@@ -48,6 +48,14 @@ export default function MaraudersSecretsDrawer({
   }, [isOpen]);
 
   const handleTriggerSpell = (spell: "lumos" | "leviosa" | "finite") => {
+    if (spell !== "finite" && activeSpell === spell) {
+      onClose();
+      return;
+    }
+    if (spell === "finite" && !activeSpell) {
+      onClose();
+      return;
+    }
     onCastSpell(spell);
     onClose();
   };
@@ -140,15 +148,20 @@ export default function MaraudersSecretsDrawer({
                 </p>
               </div>
               <button
+                disabled={activeSpell === "lumos"}
                 onClick={() => handleTriggerSpell("lumos")}
-                className={`w-full py-2.5 rounded-lg font-banner text-xs sm:text-[13px] font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                className={`w-full py-2.5 rounded-lg font-banner text-xs sm:text-[13px] font-bold flex items-center justify-center gap-2 transition-all ${
                   activeSpell === "lumos"
-                    ? "bg-[#24140D] text-[#F4D37A] border border-[#24140D] shadow-md"
-                    : "bg-[#24140D]/10 hover:bg-[#24140D] hover:text-[#FAF4E5] text-[#24140D] border border-[#8E712B]/40"
+                    ? "bg-[#24140D] text-[#F4D37A] border border-[#24140D] shadow-md opacity-85 cursor-default"
+                    : "bg-[#24140D]/10 hover:bg-[#24140D] hover:text-[#FAF4E5] text-[#24140D] border border-[#8E712B]/40 cursor-pointer"
                 }`}
               >
-                <span>{activeSpell === "lumos" ? "Lumos Cast (Active)" : "Cast Lumos Maxima"}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>{activeSpell === "lumos" ? "Lumos Maxima (Currently Active)" : "Cast Lumos Maxima"}</span>
+                {activeSpell === "lumos" ? (
+                  <span className="w-2 h-2 rounded-full bg-[#F4D37A] animate-pulse" />
+                ) : (
+                  <ArrowRight className="w-3.5 h-3.5" />
+                )}
               </button>
             </div>
 
@@ -169,22 +182,32 @@ export default function MaraudersSecretsDrawer({
                 </p>
               </div>
               <button
+                disabled={activeSpell === "leviosa"}
                 onClick={() => handleTriggerSpell("leviosa")}
-                className={`w-full py-2.5 rounded-lg font-banner text-xs sm:text-[13px] font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                className={`w-full py-2.5 rounded-lg font-banner text-xs sm:text-[13px] font-bold flex items-center justify-center gap-2 transition-all ${
                   activeSpell === "leviosa"
-                    ? "bg-[#24140D] text-[#F4D37A] border border-[#24140D] shadow-md"
-                    : "bg-[#24140D]/10 hover:bg-[#24140D] hover:text-[#FAF4E5] text-[#24140D] border border-[#8E712B]/40"
+                    ? "bg-[#24140D] text-[#F4D37A] border border-[#24140D] shadow-md opacity-85 cursor-default"
+                    : "bg-[#24140D]/10 hover:bg-[#24140D] hover:text-[#FAF4E5] text-[#24140D] border border-[#8E712B]/40 cursor-pointer"
                 }`}
               >
-                <span>{activeSpell === "leviosa" ? "Levitation Cast (Active)" : "Cast Wingardium Leviosa"}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>{activeSpell === "leviosa" ? "Wingardium Leviosa (Currently Active)" : "Cast Wingardium Leviosa"}</span>
+                {activeSpell === "leviosa" ? (
+                  <span className="w-2 h-2 rounded-full bg-[#90E0EF] animate-pulse" />
+                ) : (
+                  <ArrowRight className="w-3.5 h-3.5" />
+                )}
               </button>
             </div>
 
             {/* Finite Incantatem (Reset) */}
             <button
+              disabled={!activeSpell}
               onClick={() => handleTriggerSpell("finite")}
-              className="w-full py-3 rounded-lg border border-[#8E712B]/40 text-[#4A2D1C] hover:text-[#24140D] hover:bg-[#FAF4E5] font-banner text-xs sm:text-[13px] font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer mt-2"
+              className={`w-full py-3 rounded-lg border font-banner text-xs sm:text-[13px] font-semibold flex items-center justify-center gap-2 transition-colors mt-2 ${
+                !activeSpell
+                  ? "border-[#8E712B]/20 text-[#8E712B]/40 cursor-not-allowed bg-transparent"
+                  : "border-[#8E712B]/40 text-[#4A2D1C] hover:text-[#24140D] hover:bg-[#FAF4E5] cursor-pointer"
+              }`}
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Finite Incantatem (Dispel All Enchantments)</span>
