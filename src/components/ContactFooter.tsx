@@ -39,7 +39,7 @@ export default function ContactFooter() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl wax-seal text-[#FAF4E5] font-banner text-sm tracking-wide shadow-md hover:scale-105 active:scale-95 transition-transform"
           >
             <Mail className="w-4 h-4" />
-            <span>mmanthan780@gmail.com</span>
+            <span>Email</span>
           </a>
 
           <a
