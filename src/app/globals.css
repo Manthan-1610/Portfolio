@@ -1,26 +1,191 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --parchment-light: #FAF4E5;
+    --parchment-base: #F4EAD2;
+    --parchment-dark: #E3D1AF;
+    --parchment-deep: #CFB88E;
+    --parchment-burn: #8B5A2B;
+    --parchment-stain: #A88352;
+
+    --ink-deep: #24140D;
+    --ink-medium: #4A2D1C;
+    --ink-light: #704E37;
+    --ink-faded: #9C795D;
+
+    --ink-gold: #C5A55A;
+    --ink-gold-bright: #F4D37A;
+    --ink-gold-deep: #8E712B;
+
+    --wax-red: #7E1815;
+    --wax-red-hover: #9E221E;
+    --wax-seal-shadow: rgba(80, 10, 8, 0.45);
+  }
+
+  body {
+    background-color: #110904;
+    background-image: 
+      radial-gradient(ellipse at 50% 12%, rgba(55, 32, 16, 0.45) 0%, transparent 60%),
+      radial-gradient(ellipse at 12% 50%, rgba(45, 25, 12, 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 88% 50%, rgba(45, 25, 12, 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 90%, rgba(35, 18, 9, 0.55) 0%, transparent 60%);
+    color: var(--ink-deep);
+    font-family: var(--font-body), serif;
+    overflow-x: hidden;
+  }
+
+  /* When wand cursor is active on fine pointer devices, hide native OS cursor completely */
+  @media (pointer: fine) {
+    body.wand-cursor-active,
+    body.wand-cursor-active a,
+    body.wand-cursor-active button,
+    body.wand-cursor-active input,
+    body.wand-cursor-active select,
+    body.wand-cursor-active textarea,
+    body.wand-cursor-active [role="button"],
+    body.wand-cursor-active * {
+      cursor: none !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom Marauder Typography Classes */
+.font-title {
+  font-family: var(--font-title), serif;
+}
+
+.font-banner {
+  font-family: var(--font-banner), serif;
+  letter-spacing: 0.035em;
+}
+
+.font-body {
+  font-family: var(--font-body), Georgia, Cambria, serif;
+}
+
+.font-handwriting {
+  font-family: var(--font-handwriting), cursive;
+}
+
+/* Procedural Parchment Sheet Texture (Pure CSS, 0 raster image bloat) */
+.parchment-texture {
+  background-color: var(--parchment-base);
+  background-image: 
+    radial-gradient(circle at 18% 22%, rgba(218, 192, 145, 0.45) 0%, transparent 45%),
+    radial-gradient(circle at 82% 78%, rgba(200, 170, 120, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 248, 230, 0.6) 0%, transparent 70%),
+    radial-gradient(ellipse at 8% 92%, rgba(175, 140, 95, 0.35) 0%, transparent 35%),
+    radial-gradient(ellipse at 92% 10%, rgba(165, 130, 85, 0.3) 0%, transparent 40%);
+  box-shadow: 
+    inset 0 0 80px rgba(78, 48, 22, 0.28),
+    inset 0 0 20px rgba(60, 35, 15, 0.2),
+    0 15px 45px rgba(0, 0, 0, 0.4);
+}
+
+/* Aged Parchment Border */
+.parchment-border {
+  border: 2px solid #8E712B;
+  box-shadow: 
+    inset 0 0 0 1px rgba(244, 234, 210, 0.5),
+    inset 0 0 15px rgba(120, 80, 40, 0.15),
+    0 4px 14px rgba(36, 20, 13, 0.2);
+}
+
+/* 3D Gatefold Container Perspective */
+.gatefold-perspective {
+  perspective: 2000px;
+  perspective-origin: center center;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1C110A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5A3920;
+  border: 2px solid #1C110A;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-gold);
+}
+
+/* Ink Bleed Filter Utility */
+.ink-filter {
+  filter: url(#ink-bleed-filter);
+}
+
+/* Wax Seal Badge */
+.wax-seal {
+  background: radial-gradient(circle at 35% 35%, #A82420, #6E1210 75%, #4A0A08 100%);
+  border: 2px solid #9E221E;
+  box-shadow: 
+    0 3px 8px var(--wax-seal-shadow),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Subtle Candle Flicker */
+@keyframes candleFlicker {
+  0%, 100% { opacity: 0.95; transform: scale(1) translateY(0); filter: drop-shadow(0 0 10px rgba(255, 200, 80, 0.8)); }
+  25% { opacity: 0.8; transform: scale(1.06, 0.94) skewX(2deg) translateY(-1px); filter: drop-shadow(0 0 14px rgba(255, 220, 110, 0.9)); }
+  50% { opacity: 1; transform: scale(0.96, 1.04) translateY(-2px); filter: drop-shadow(0 0 12px rgba(255, 190, 70, 0.85)); }
+  75% { opacity: 0.85; transform: scale(1.03, 0.97) skewX(-2deg) translateY(0); filter: drop-shadow(0 0 15px rgba(255, 210, 90, 0.95)); }
+}
+
+.animate-candle-flame {
+  animation: candleFlicker 2.8s infinite ease-in-out;
+}
+
+/* Golden Snitch Hover Flight */
+@keyframes snitchOrbit {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(45px, -25px) rotate(6deg); }
+  50% { transform: translate(80px, 15px) rotate(-4deg); }
+  75% { transform: translate(35px, 30px) rotate(5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.animate-snitch {
+  animation: snitchOrbit 12s infinite ease-in-out;
+}
+
+/* Live Spells from Marauder's Secrets */
+@keyframes levitateFloating {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0.5deg);
+  }
+}
+
+.levitate-active .parchment-border {
+  animation: levitateFloating 4.5s ease-in-out infinite;
+  box-shadow: 0 25px 45px rgba(197, 165, 90, 0.25), inset 0 0 20px rgba(244, 211, 122, 0.3) !important;
+}
+
+.levitate-active header .parchment-border {
+  animation: none !important;
+}
+
+.lumos-active {
+  filter: contrast(1.05) brightness(1.1);
+}
+
+.lumos-active .parchment-border {
+  border-color: #F4D37A !important;
+  box-shadow: 0 0 30px rgba(244, 211, 122, 0.4), inset 0 0 20px rgba(244, 211, 122, 0.2) !important;
 }

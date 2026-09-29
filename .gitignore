@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local archives & scratch
+legacy-vanilla/
+assets/
+/resume/
+CLAUDE.md
