@@ -101,8 +101,8 @@ function build(container: HTMLElement): Geometry | null {
   const c = mobile ? gutter / 2 : gutter * 0.46;
   const doors = roomEls.map((r) => r.getBoundingClientRect().top - crect.top + DOOR_Y);
   const end = doors[doors.length - 1] + 150;
-  // The corridor begins just above the first room; the floor plan sits above it.
-  const start = Math.max(0, doors[0] - 240);
+  // The corridor begins just above the first room, clear of the floor plan.
+  const start = Math.max(0, doors[0] - 100);
 
   // Control points: straight through each door, gently wandering between them.
   const pts: Pt[] = [{ x: c, y: start }];

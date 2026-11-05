@@ -87,7 +87,7 @@ export default function Trophies() {
     >
       <header className="mb-14 max-w-2xl">
         <h2 data-ink className="font-display text-[clamp(42px,5.4vw,70px)] font-normal leading-[0.95]">
-          Proof, in photographs
+          What I&apos;ve won
         </h2>
         <p data-ink className="mt-3 font-display text-[19px] italic text-ink-soft" style={d(0.2)}>
           Wizard photographs. Look at one long enough and it starts to move.

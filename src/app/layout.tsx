@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { IM_Fell_English, IM_Fell_English_SC, EB_Garamond, Mrs_Saint_Delafield, Cedarville_Cursive } from "next/font/google";
+import { IM_Fell_English, IM_Fell_English_SC, EB_Garamond, Mrs_Saint_Delafield, Kalam } from "next/font/google";
 import "./globals.css";
 
 const fell = IM_Fell_English({ variable: "--nf-fell", subsets: ["latin"], weight: "400", style: ["normal", "italic"] });
 const fellSC = IM_Fell_English_SC({ variable: "--nf-fell-sc", subsets: ["latin"], weight: "400" });
 const garamond = EB_Garamond({ variable: "--nf-garamond", subsets: ["latin"], style: ["normal", "italic"] });
 const script = Mrs_Saint_Delafield({ variable: "--nf-script", subsets: ["latin"], weight: "400" });
-const hand = Cedarville_Cursive({ variable: "--nf-hand", subsets: ["latin"], weight: "400" });
+// Kalam: handwritten, but still easy to read at small sizes (Cedarville was not).
+const hand = Kalam({ variable: "--nf-hand", subsets: ["latin"], weight: "400" });
 
 export const viewport: Viewport = {
   width: "device-width",

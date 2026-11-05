@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Room from "@/components/map/Room";
-import { PacingFootprints } from "@/components/map/Footprint";
 import { d } from "@/components/map/Rule";
+import portrait from "@/images/manthan-portrait.jpg";
 
 const facts: { label: string; value: string; href?: string }[] = [
   { label: "Proudest", value: "Software Engineer Intern, Intrinsic (Google) · Summer 2026", href: "#intrinsic" },
@@ -17,7 +18,7 @@ export default function Hero() {
       decor={["hearth"]}
       className="px-6 pb-14 pt-16 sm:px-10 md:px-14 md:pb-16 md:pt-20 lg:px-16"
     >
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-center">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-center">
         <div>
           <h2 data-ink className="font-display text-[clamp(42px,5.4vw,70px)] font-normal leading-[0.95]">
             Who I am
@@ -45,7 +46,30 @@ export default function Hero() {
           </dl>
         </div>
 
-        <PacingFootprints label="Manthan Mehta" sub="pacing the Great Hall" className="mx-auto w-[200px]" />
+        {/* A wizard photograph: sepia until you look at it, then it comes alive. */}
+        <figure data-ink className="m-0 mx-auto w-full max-w-[280px]" style={d(0.35)}>
+          <div className="wizard-photo relative rotate-[1.8deg] bg-[#f6eedb] p-2.5 pb-3 shadow-[2px_5px_12px_rgb(43_27_16/0.28)] transition-transform duration-500 hover:rotate-0">
+            <span
+              aria-hidden="true"
+              className="absolute -top-3 left-1/2 z-10 h-7 w-24 -translate-x-1/2 -rotate-3 bg-[rgb(238_226_196/0.72)] shadow-[0_1px_2px_rgb(0_0_0/0.12)]"
+              style={{ clipPath: "polygon(2% 8%, 98% 0, 100% 92%, 0 100%)" }}
+            />
+            <div className="relative overflow-hidden" style={{ aspectRatio: `${portrait.width} / ${portrait.height}` }}>
+              <Image
+                src={portrait}
+                alt="Manthan Mehta in a Gryffindor uniform and round glasses, arms crossed, on a city street at night"
+                fill
+                sizes="280px"
+                placeholder="blur"
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <figcaption className="mt-4 px-1 text-center">
+            <span className="block font-display text-[19px] leading-tight">Manthan Mehta</span>
+            <span className="block font-hand text-[15px] leading-snug text-ink-soft">in house colours, naturally</span>
+          </figcaption>
+        </figure>
       </div>
 
       <div className="mt-12 grid gap-1 border-t border-dashed border-ink/25 pt-5 sm:grid-cols-[auto_1fr] sm:gap-6">

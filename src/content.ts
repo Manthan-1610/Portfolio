@@ -32,7 +32,7 @@ export const rooms: Room[] = [
     numeral: "III",
     name: "The Room of Requirement",
     plain: "Projects",
-    peek: "HealthSync, Smart Attendance, the Rabbit Robot",
+    peek: "HealthSync, Smart Attendance, the Rabbit Robot",
   },
   { id: "library", numeral: "IV", name: "The Library", plain: "Skills", peek: "Every tool I use, with its borrowing card" },
   { id: "trophy-room", numeral: "V", name: "The Trophy Room", plain: "Awards", peek: "A gold medal, AIR 9, three hackathon wins" },

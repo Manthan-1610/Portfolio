@@ -572,6 +572,10 @@ html.plan-zooming .corridor {
   .plan {
     /* the whole plan fits on one screen */
     max-width: min(100%, calc((100svh - 120px) * 1120 / 690));
+    /* Rooms leave a wide left margin for the corridor, which starts below
+       the plan. Shift the plan by half the difference between the margins
+       (112px left, 32px right) so it sits centred on the screen. */
+    left: -40px;
   }
   .plan-wide {
     display: block;
@@ -650,7 +654,7 @@ html.plan-zooming .corridor {
     width: calc(var(--u) * 380);
   }
   .plan-c-messrs {
-    font-size: max(9.5px, calc(var(--u) * 12));
+    font-size: max(11px, calc(var(--u) * 12));
   }
   .plan-c-purveyors {
     font-size: max(12px, calc(var(--u) * 16));
@@ -701,25 +705,26 @@ html.plan-zooming .corridor {
 }
 .plan-room-name {
   font-family: var(--font-sc);
-  font-size: max(9.5px, calc(var(--u) * 11.5));
+  font-size: max(11px, calc(var(--u) * 11.5));
   letter-spacing: 0.16em;
   line-height: 1.3;
   color: var(--color-ink-soft);
 }
 .plan-room-round .plan-room-name {
-  font-size: max(9.5px, calc(var(--u) * 10.5));
+  font-size: max(10.5px, calc(var(--u) * 10.5));
   letter-spacing: 0.06em;
 }
 /* What's inside a tower, written just below it */
 .plan-note {
   position: absolute;
   margin: 0;
-  width: calc(var(--u) * 190);
+  width: calc(var(--u) * 200);
+  text-wrap: balance;
   transform: translateX(-50%);
   text-align: center;
   font-family: var(--font-hand);
-  font-size: max(11.5px, calc(var(--u) * 14.5));
-  line-height: 1.2;
+  font-size: max(13px, calc(var(--u) * 14));
+  line-height: 1.25;
   color: var(--color-ink-soft);
   pointer-events: none;
 }
@@ -744,10 +749,11 @@ html.plan-zooming .corridor {
 }
 .plan-room-peek {
   margin-top: calc(var(--u) * 6);
-  max-width: calc(var(--u) * 200);
+  max-width: calc(var(--u) * 270);
+  text-wrap: balance;
   font-family: var(--font-hand);
-  font-size: max(11.5px, calc(var(--u) * 14.5));
-  line-height: 1.2;
+  font-size: max(13px, calc(var(--u) * 14));
+  line-height: 1.25;
   color: var(--color-ink-soft);
 }
 .plan-room-enter {
@@ -802,7 +808,7 @@ html.plan-zooming .corridor {
   margin: calc(var(--u) * 4) 0 0;
   text-align: center;
   font-family: var(--font-hand);
-  font-size: max(10.5px, calc(var(--u) * 12.5));
+  font-size: max(12px, calc(var(--u) * 12.5));
   line-height: 1.2;
   color: var(--color-ink-soft);
 }
@@ -812,7 +818,7 @@ html.plan-zooming .corridor {
   top: 93.6%;
   margin: 0;
   transform: translateX(-50%);
-  font-size: max(9px, calc(var(--u) * 10.5));
+  font-size: max(10.5px, calc(var(--u) * 10.5));
   color: var(--color-ink-faint);
 }
 .plan-key p {
@@ -844,10 +850,10 @@ html.plan-zooming .corridor {
   top: 87.5%;
 }
 .plan-wide .plan-key-title {
-  font-size: max(9px, calc(var(--u) * 10.5));
+  font-size: max(10.5px, calc(var(--u) * 10.5));
 }
 .plan-wide .plan-key-row {
-  font-size: max(11px, calc(var(--u) * 13.5));
+  font-size: max(12.5px, calc(var(--u) * 13.5));
 }
 
 /* The work Manthan is proudest of, pinned to the plan */
@@ -896,7 +902,7 @@ html.plan-zooming .corridor {
   min-width: 0;
 }
 .plan-spotlight-kicker {
-  font-size: 10.5px;
+  font-size: 11.5px;
   color: var(--color-blood);
 }
 .plan-spotlight-role {
@@ -944,7 +950,7 @@ html.plan-zooming .corridor {
     font-size: calc(var(--u) * 60);
   }
   .plan-wide-spotlight .plan-spotlight-kicker {
-    font-size: max(9px, calc(var(--u) * 10.5));
+    font-size: max(11px, calc(var(--u) * 11));
   }
   .plan-wide-spotlight .plan-spotlight-role {
     font-size: max(14px, calc(var(--u) * 21));
@@ -953,6 +959,10 @@ html.plan-zooming .corridor {
     font-size: max(11.5px, calc(var(--u) * 14));
   }
   .plan-wide-spotlight .plan-spotlight-line {
-    font-size: max(11.5px, calc(var(--u) * 14.5));
+    font-size: max(13px, calc(var(--u) * 14.5));
   }
+}
+/* On the portrait plan the towers sit near the edges, so keep their notes narrower. */
+.plan-tall .plan-note {
+  width: calc(var(--u) * 190);
 }
