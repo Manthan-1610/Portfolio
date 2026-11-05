@@ -1,191 +1,968 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --parchment-light: #FAF4E5;
-    --parchment-base: #F4EAD2;
-    --parchment-dark: #E3D1AF;
-    --parchment-deep: #CFB88E;
-    --parchment-burn: #8B5A2B;
-    --parchment-stain: #A88352;
+@theme inline {
+  --color-paper: #efe1c1;
+  --color-paper-deep: #e4cfa3;
+  --color-ink: #2b1b10;
+  --color-ink-soft: #57402d;
+  --color-ink-faint: #6e553f;
+  --color-blood: #7d2316;
+  --color-gilt: #a37b2c;
 
-    --ink-deep: #24140D;
-    --ink-medium: #4A2D1C;
-    --ink-light: #704E37;
-    --ink-faded: #9C795D;
+  --font-display: var(--nf-fell), "Iowan Old Style", Georgia, serif;
+  --font-sc: var(--nf-fell-sc), "Iowan Old Style", Georgia, serif;
+  --font-body: var(--nf-garamond), Georgia, serif;
+  --font-script: var(--nf-script), cursive;
+  --font-hand: var(--nf-hand), cursive;
+}
 
-    --ink-gold: #C5A55A;
-    --ink-gold-bright: #F4D37A;
-    --ink-gold-deep: #8E712B;
+/* ---------------------------------------------------------------- paper */
 
-    --wax-red: #7E1815;
-    --wax-red-hover: #9E221E;
-    --wax-seal-shadow: rgba(80, 10, 8, 0.45);
-  }
+:root {
+  --ink-line: rgb(43 27 16 / 0.78);
+  --mx: -9999px;
+  --my: -9999px;
+  /* Parchment: mottling and fibres from feTurbulence, pre-rendered to one
+     opaque tile. Live SVG filters re-run on every repaint, which made the
+     oath reveal and scrolling stutter. */
+  --paper: url("/textures/paper.webp");
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.22  0 0 0 0 0.13  0 0 0 0 0.06  0 0 0 -1.5 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --wear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -3.4 2.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --wand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='3.5' cy='3.5' r='3' fill='%23ffe7a8' opacity='.85'/%3E%3Cpath d='M4 4 L21 21' stroke='%23fff3d6' stroke-width='3.6' stroke-linecap='round' opacity='.6'/%3E%3Cpath d='M4 4 L21 21' stroke='%233a2416' stroke-width='2.1' stroke-linecap='round'/%3E%3Cpath d='M20 20 L29 29' stroke='%23fff3d6' stroke-width='5' stroke-linecap='round' opacity='.6'/%3E%3Cpath d='M20 20 L29 29' stroke='%231e120a' stroke-width='3.4' stroke-linecap='round'/%3E%3Ccircle cx='20.5' cy='20.5' r='1.8' fill='%23a37b2c'/%3E%3C/svg%3E");
+  --wand-lit: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='3.5' cy='3.5' r='3.6' fill='%23ffd56b'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.6' fill='%23fff'/%3E%3Cpath d='M4 4 L21 21' stroke='%23fff3d6' stroke-width='3.6' stroke-linecap='round' opacity='.6'/%3E%3Cpath d='M4 4 L21 21' stroke='%233a2416' stroke-width='2.1' stroke-linecap='round'/%3E%3Cpath d='M20 20 L29 29' stroke='%23fff3d6' stroke-width='5' stroke-linecap='round' opacity='.6'/%3E%3Cpath d='M20 20 L29 29' stroke='%231e120a' stroke-width='3.4' stroke-linecap='round'/%3E%3Ccircle cx='20.5' cy='20.5' r='1.8' fill='%23a37b2c'/%3E%3C/svg%3E");
+  --squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5.2 C 38 2.6, 76 6.8, 118 4.3 S 176 3.4, 199 5.4' stroke='%237d2316' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  --squiggle-faint: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5.2 C 38 2.6, 76 6.8, 118 4.3 S 176 3.4, 199 5.4' stroke='%232b1b10' stroke-opacity='.45' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+}
 
+.paper {
+  background-color: var(--color-paper);
+  background-image: var(--paper);
+  background-size: 1100px 1100px;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background-color: var(--color-paper);
+  background-image: var(--paper);
+  background-size: 1100px 1100px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgb(125 35 22 / 0.18);
+  color: var(--color-ink);
+}
+
+@media (pointer: fine) {
   body {
-    background-color: #110904;
-    background-image: 
-      radial-gradient(ellipse at 50% 12%, rgba(55, 32, 16, 0.45) 0%, transparent 60%),
-      radial-gradient(ellipse at 12% 50%, rgba(45, 25, 12, 0.5) 0%, transparent 50%),
-      radial-gradient(ellipse at 88% 50%, rgba(45, 25, 12, 0.5) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 90%, rgba(35, 18, 9, 0.55) 0%, transparent 60%);
-    color: var(--ink-deep);
-    font-family: var(--font-body), serif;
-    overflow-x: hidden;
+    cursor: var(--wand) 3 3, auto;
   }
-
-  /* When wand cursor is active on fine pointer devices, hide native OS cursor completely */
-  @media (pointer: fine) {
-    body.wand-cursor-active,
-    body.wand-cursor-active a,
-    body.wand-cursor-active button,
-    body.wand-cursor-active input,
-    body.wand-cursor-active select,
-    body.wand-cursor-active textarea,
-    body.wand-cursor-active [role="button"],
-    body.wand-cursor-active * {
-      cursor: none !important;
-    }
+  a,
+  button,
+  [role="button"],
+  summary {
+    cursor: var(--wand-lit) 3 3, pointer;
   }
 }
 
-/* Custom Marauder Typography Classes */
-.font-title {
-  font-family: var(--font-title), serif;
+:focus-visible {
+  outline: 2px dashed var(--color-blood);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
-.font-banner {
-  font-family: var(--font-banner), serif;
-  letter-spacing: 0.035em;
+/* Fixed atmosphere layers, top to bottom: grain, vignette, wand light. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  background-image: var(--grain);
+  opacity: 0.32;
+  mix-blend-mode: multiply;
 }
 
-.font-body {
-  font-family: var(--font-body), Georgia, Cambria, serif;
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  pointer-events: none;
+  background: radial-gradient(ellipse 75% 70% at 50% 45%, transparent 55%, rgb(96 54 20 / 0.22) 100%);
+  box-shadow: inset 0 0 140px rgb(80 44 16 / 0.32);
 }
 
-.font-handwriting {
-  font-family: var(--font-handwriting), cursive;
+.wand-light {
+  position: fixed;
+  inset: 0;
+  z-index: 88;
+  pointer-events: none;
+  background: radial-gradient(circle 300px at var(--mx) var(--my), rgb(255 232 170 / 0.55), rgb(255 232 170 / 0) 70%);
+  mix-blend-mode: soft-light;
 }
 
-/* Procedural Parchment Sheet Texture (Pure CSS, 0 raster image bloat) */
-.parchment-texture {
-  background-color: var(--parchment-base);
-  background-image: 
-    radial-gradient(circle at 18% 22%, rgba(218, 192, 145, 0.45) 0%, transparent 45%),
-    radial-gradient(circle at 82% 78%, rgba(200, 170, 120, 0.4) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 248, 230, 0.6) 0%, transparent 70%),
-    radial-gradient(ellipse at 8% 92%, rgba(175, 140, 95, 0.35) 0%, transparent 35%),
-    radial-gradient(ellipse at 92% 10%, rgba(165, 130, 85, 0.3) 0%, transparent 40%);
-  box-shadow: 
-    inset 0 0 80px rgba(78, 48, 22, 0.28),
-    inset 0 0 20px rgba(60, 35, 15, 0.2),
-    0 15px 45px rgba(0, 0, 0, 0.4);
+.lumos .wand-light {
+  background: radial-gradient(ellipse 120% 90% at 50% 40%, rgb(255 232 170 / 0.4), transparent 75%);
 }
 
-/* Aged Parchment Border */
-.parchment-border {
-  border: 2px solid #8E712B;
-  box-shadow: 
-    inset 0 0 0 1px rgba(244, 234, 210, 0.5),
-    inset 0 0 15px rgba(120, 80, 40, 0.15),
-    0 4px 14px rgba(36, 20, 13, 0.2);
+@media (hover: none) {
+  .wand-light {
+    display: none;
+  }
 }
 
-/* 3D Gatefold Container Perspective */
-.gatefold-perspective {
-  perspective: 2000px;
-  perspective-origin: center center;
+/* ------------------------------------------------------------- ink in */
+
+.js [data-ink] {
+  opacity: 0;
 }
 
-.preserve-3d {
-  transform-style: preserve-3d;
+.js.sworn [data-ink].inked {
+  animation: ink-in 1.25s cubic-bezier(0.2, 0.6, 0.2, 1) var(--d, 0s) both;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+/* A light blur that clears early: the ink still bleeds in, but blurring many
+   blocks at once (as the map opens) is costly, and the cost grows with radius. */
+@keyframes ink-in {
+  0% {
+    opacity: 0;
+    filter: blur(2.5px);
+  }
+  45% {
+    opacity: 0.8;
+    filter: blur(0.6px);
+  }
+  60% {
+    filter: none;
+  }
+  100% {
+    opacity: 1;
+    filter: none;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #1C110A;
+/* Hand-drawn lines (room walls, flourishes) draw themselves once inked. */
+.js .draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #5A3920;
-  border: 2px solid #1C110A;
+.js.sworn .inked .draw,
+.js.sworn .draw.inked {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--dur, 2.6s) cubic-bezier(0.65, 0.05, 0.35, 1) var(--d, 0.15s);
+}
+
+/* -------------------------------------------------------- invisible ink */
+
+.invisible-ink {
+  color: transparent;
+  background-image: radial-gradient(
+    circle 210px at var(--mx) var(--my),
+    rgb(125 35 22 / 1) 0%,
+    rgb(125 35 22 / 0.8) 45%,
+    rgb(125 35 22 / 0) 100%
+  );
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: color 0.9s ease;
+}
+
+.lumos .invisible-ink {
+  color: var(--color-blood);
+}
+
+@media (hover: none) {
+  .invisible-ink {
+    color: rgb(125 35 22 / 0.85);
+    background-image: none;
+  }
+}
+
+.only-touch {
+  display: none;
+}
+@media (hover: none) {
+  .only-touch {
+    display: inline;
+  }
+  .only-hover {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------- typography */
+
+.ink-link {
+  text-decoration: none;
+  color: inherit;
+  background-image: var(--squiggle), var(--squiggle-faint);
+  background-repeat: no-repeat;
+  background-position: 0 100%, 0 100%;
+  background-size: 0% 7px, 100% 7px;
+  padding-bottom: 5px;
+  transition: background-size 0.5s cubic-bezier(0.6, 0, 0.2, 1), color 0.3s;
+}
+
+.ink-link:hover,
+.ink-link:focus-visible {
+  color: var(--color-blood);
+  background-size: 100% 7px, 100% 7px;
+}
+
+.mark {
+  font-weight: 600;
+  color: var(--color-ink);
+  background-image: var(--squiggle);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 6px;
+  padding-bottom: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.smallcaps {
+  font-family: var(--font-sc);
+  letter-spacing: 0.16em;
+}
+
+.onum {
+  font-variant-numeric: oldstyle-nums;
+}
+
+/* Rubber stamp: double border, multiply blend, worn edges. */
+.stamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--color-blood);
+  border: 3px double currentColor;
   border-radius: 4px;
+  padding: 0.45em 1em 0.4em;
+  font-family: var(--font-sc);
+  letter-spacing: 0.14em;
+  line-height: 1.1;
+  mix-blend-mode: multiply;
+  opacity: 0.86;
+  -webkit-mask-image: var(--wear);
+  mask-image: var(--wear);
+  -webkit-mask-size: 300px 300px;
+  mask-size: 300px 300px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--ink-gold);
+/* Wax seal */
+.wax {
+  background: radial-gradient(circle at 36% 32%, #b8382b 0%, #8d1f15 45%, #5c0f09 100%);
+  box-shadow:
+    0 2px 5px rgb(60 10 4 / 0.45),
+    inset 0 1px 2px rgb(255 200 180 / 0.35),
+    inset 0 -3px 5px rgb(0 0 0 / 0.35);
+  color: #f3d9b4;
 }
 
-/* Ink Bleed Filter Utility */
-.ink-filter {
-  filter: url(#ink-bleed-filter);
+/* Wizard photographs: sepia until looked at, then they come alive. */
+.wizard-photo img {
+  filter: sepia(0.8) saturate(0.75) contrast(1.04) brightness(0.96);
+  transition: filter 0.9s ease;
+  transform-origin: 50% 40%;
 }
 
-/* Wax Seal Badge */
-.wax-seal {
-  background: radial-gradient(circle at 35% 35%, #A82420, #6E1210 75%, #4A0A08 100%);
-  border: 2px solid #9E221E;
-  box-shadow: 
-    0 3px 8px var(--wax-seal-shadow),
-    inset 0 1px 2px rgba(255, 255, 255, 0.3),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+.wizard-photo:hover img,
+.wizard-photo:focus-visible img {
+  filter: sepia(0.1) saturate(1);
+  animation: alive 9s ease-in-out infinite alternate;
 }
 
-/* Subtle Candle Flicker */
-@keyframes candleFlicker {
-  0%, 100% { opacity: 0.95; transform: scale(1) translateY(0); filter: drop-shadow(0 0 10px rgba(255, 200, 80, 0.8)); }
-  25% { opacity: 0.8; transform: scale(1.06, 0.94) skewX(2deg) translateY(-1px); filter: drop-shadow(0 0 14px rgba(255, 220, 110, 0.9)); }
-  50% { opacity: 1; transform: scale(0.96, 1.04) translateY(-2px); filter: drop-shadow(0 0 12px rgba(255, 190, 70, 0.85)); }
-  75% { opacity: 0.85; transform: scale(1.03, 0.97) skewX(-2deg) translateY(0); filter: drop-shadow(0 0 15px rgba(255, 210, 90, 0.95)); }
-}
-
-.animate-candle-flame {
-  animation: candleFlicker 2.8s infinite ease-in-out;
-}
-
-/* Golden Snitch Hover Flight */
-@keyframes snitchOrbit {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(45px, -25px) rotate(6deg); }
-  50% { transform: translate(80px, 15px) rotate(-4deg); }
-  75% { transform: translate(35px, 30px) rotate(5deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
-}
-
-.animate-snitch {
-  animation: snitchOrbit 12s infinite ease-in-out;
-}
-
-/* Live Spells from Marauder's Secrets */
-@keyframes levitateFloating {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+@keyframes alive {
+  0% {
+    transform: scale(1.015) translate(0, 0);
   }
   50% {
-    transform: translateY(-10px) rotate(0.5deg);
+    transform: scale(1.06) translate(-1.2%, -0.8%);
+  }
+  100% {
+    transform: scale(1.04) translate(1%, -1.4%);
   }
 }
 
-.levitate-active .parchment-border {
-  animation: levitateFloating 4.5s ease-in-out infinite;
-  box-shadow: 0 25px 45px rgba(197, 165, 90, 0.25), inset 0 0 20px rgba(244, 211, 122, 0.3) !important;
+/* --------------------------------------------------------------- oath */
+
+@property --r {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: -120px;
 }
 
-.levitate-active header .parchment-border {
-  animation: none !important;
+@property --p {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: -8%;
 }
 
-.lumos-active {
-  filter: contrast(1.05) brightness(1.1);
+.oath {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  --x: 50vw;
+  --y: 50vh;
+  --r: -120px;
+  -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), transparent var(--r), #000 calc(var(--r) + 90px));
+  mask-image: radial-gradient(circle at var(--x) var(--y), transparent var(--r), #000 calc(var(--r) + 90px));
 }
 
-.lumos-active .parchment-border {
-  border-color: #F4D37A !important;
-  box-shadow: 0 0 30px rgba(244, 211, 122, 0.4), inset 0 0 20px rgba(244, 211, 122, 0.2) !important;
+.oath::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--x) var(--y),
+    transparent calc(var(--r) + 10px),
+    rgb(43 27 16 / 0.16) calc(var(--r) + 40px),
+    transparent calc(var(--r) + 96px)
+  );
+}
+
+.sworn-init .oath {
+  display: none;
+}
+
+.oath[data-phase="revealing"] {
+  --r: 180vmax;
+  transition: --r 1.9s cubic-bezier(0.5, 0.05, 0.6, 0.35);
+}
+
+.oath[data-phase="closing"] {
+  --r: -120px;
+  transition: --r 1.5s cubic-bezier(0.3, 0.6, 0.4, 1);
+}
+
+.oath[data-phase="closing-start"] {
+  --r: 180vmax;
+}
+
+.write {
+  --p: -8%;
+  -webkit-mask-image: linear-gradient(90deg, #000 var(--p), transparent calc(var(--p) + 7%));
+  mask-image: linear-gradient(90deg, #000 var(--p), transparent calc(var(--p) + 7%));
+  animation: write var(--dur, 2.2s) cubic-bezier(0.45, 0.1, 0.45, 1) var(--d, 0s) forwards;
+}
+
+@keyframes write {
+  to {
+    --p: 100%;
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fade-up 1s ease var(--d, 0s) forwards;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------- footprints */
+
+.step {
+  animation: step-in 0.35s ease-out both;
+}
+
+@keyframes step-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.pace use {
+  opacity: 0;
+  animation: pace var(--cycle, 4.8s) linear infinite;
+  animation-delay: var(--d);
+}
+
+@keyframes pace {
+  0% {
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.9;
+  }
+  35% {
+    opacity: 0.55;
+  }
+  62% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.shuffle-a {
+  animation: shuffle 1.3s ease-in-out infinite;
+}
+.shuffle-b {
+  animation: shuffle 1.3s ease-in-out infinite 0.65s;
+}
+@keyframes shuffle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* ---------------------------------------------------------- scrollbar */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #e4cfa3;
+}
+::-webkit-scrollbar-thumb {
+  background: #8a6d52;
+  border: 3px solid #e4cfa3;
+  border-radius: 6px;
+}
+
+/* ------------------------------------------------------ reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js [data-ink],
+  .js.sworn [data-ink].inked {
+    opacity: 1;
+    animation: none;
+  }
+  .js .draw {
+    stroke-dashoffset: 0;
+  }
+  .write,
+  .fade-up {
+    --p: 100%;
+    opacity: 1;
+    animation: none;
+  }
+  .oath[data-phase="revealing"],
+  .oath[data-phase="closing"] {
+    transition: none;
+  }
+  .wizard-photo:hover img {
+    animation: none;
+  }
+}
+
+@media print {
+  .grain,
+  .vignette,
+  .wand-light,
+  .oath,
+  .no-print {
+    display: none !important;
+  }
+  .js [data-ink] {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  .js .draw {
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+html.sealed,
+html.sealed body {
+  overflow: hidden;
+}
+
+/* A faint sparkle marks where invisible ink is waiting to be lit. */
+.invisible-ink::before {
+  content: "✧";
+  margin-right: 0.4em;
+  color: rgb(87 64 45 / 0.5);
+  font-family: var(--font-display);
+}
+
+/* Project footage: sepia while still, colour once it moves. */
+.moving-photo video,
+.match-poster img {
+  filter: sepia(0.7) saturate(0.75) contrast(1.04) brightness(0.97);
+  transition: filter 0.9s ease;
+}
+.moving-photo[data-playing="true"] video,
+.match-poster:hover img,
+.match-poster:focus-visible img {
+  filter: sepia(0.08) saturate(1);
+}
+
+/* ---------------------------------------------------------- floor plan */
+
+/* Elements that should simply fade in once inked (no blur: some are large). */
+.js.sworn [data-ink="fade"].inked {
+  animation: none;
+  opacity: 1;
+  transition: opacity 0.9s ease var(--d, 0s);
+}
+
+.plan {
+  position: relative;
+  margin: 0 auto;
+  /* moves at once (so the click registers), then rushes in */
+  transition:
+    transform 0.62s cubic-bezier(0.45, 0.1, 0.7, 0.3),
+    opacity 0.38s ease-in 0.24s;
+}
+.plan.plan-zoom {
+  transform: scale(2.4);
+  opacity: 0;
+}
+/* While the plan zooms, everything else steps back; it fades in again
+   around the room the visitor lands in. */
+#plan ~ *,
+.corridor {
+  transition: opacity 0.5s ease;
+}
+html.plan-zooming #plan ~ *,
+html.plan-zooming .corridor {
+  opacity: 0;
+  transition-duration: 0.2s;
+}
+/* --u is one plan unit, so the cartouche scales with the drawing. */
+.plan-inner {
+  position: relative;
+  --u: calc(100cqw / 1120);
+}
+.plan-wide {
+  display: none;
+  position: relative;
+}
+.plan-tall {
+  max-width: 460px;
+  margin: 32px auto 0;
+}
+.plan-tall-key {
+  max-width: 460px;
+  margin: 18px auto 0;
+}
+@media (min-width: 1024px) {
+  .plan {
+    /* the whole plan fits on one screen */
+    max-width: min(100%, calc((100svh - 120px) * 1120 / 690));
+    /* Rooms leave a wide left margin for the corridor, which starts below
+       the plan. Shift the plan by half the difference between the margins
+       (112px left, 32px right) so it sits centred on the screen. */
+    left: -40px;
+  }
+  .plan-wide {
+    display: block;
+  }
+  .plan-tall,
+  .plan-tall-key {
+    display: none;
+  }
+}
+
+.js .plan-dashed {
+  opacity: 0;
+}
+.js.sworn [data-ink="fade"].plan-fill.inked {
+  transition-duration: 1.4s;
+}
+.js.sworn .inked .plan-dashed {
+  opacity: 1;
+  transition: opacity 1.2s ease 2.2s;
+}
+
+/* The title cartouche */
+.plan-cartouche {
+  position: relative;
+  z-index: 2;
+}
+.plan-cartouche p {
+  margin: 0;
+}
+.plan-c-messrs {
+  font-size: 11px;
+  color: var(--color-ink-soft);
+}
+.plan-c-purveyors {
+  margin-top: 2px !important;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--color-ink-soft);
+}
+.plan-c-name {
+  margin: 18px 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(64px, 18vw, 116px);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+}
+.plan-c-role {
+  margin-top: 18px !important;
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.2;
+}
+.plan-c-where {
+  margin-top: 3px !important;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--color-ink-soft);
+}
+.plan-c-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin-top: 14px !important;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 19px;
+}
+@media (min-width: 1024px) {
+  .plan-cartouche {
+    position: absolute;
+    left: calc(var(--u) * 22);
+    top: calc(var(--u) * 14);
+    width: calc(var(--u) * 380);
+  }
+  .plan-c-messrs {
+    font-size: max(11px, calc(var(--u) * 12));
+  }
+  .plan-c-purveyors {
+    font-size: max(12px, calc(var(--u) * 16));
+  }
+  .plan-c-name {
+    margin-top: calc(var(--u) * 14);
+    font-size: calc(var(--u) * 82);
+  }
+  .plan-c-role {
+    margin-top: calc(var(--u) * 16) !important;
+    font-size: max(14px, calc(var(--u) * 21));
+  }
+  .plan-c-where {
+    font-size: max(12px, calc(var(--u) * 15.5));
+  }
+  .plan-c-links {
+    gap: calc(var(--u) * 4) calc(var(--u) * 20);
+    margin-top: calc(var(--u) * 12) !important;
+    font-size: max(13px, calc(var(--u) * 18));
+  }
+}
+
+/* Rooms on the plan are links */
+.plan-room {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: calc(var(--u) * 14) calc(var(--u) * 16);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: background-color 0.35s ease;
+}
+.plan-room:hover,
+.plan-room:focus-visible {
+  background-color: rgb(125 35 22 / 0.07);
+}
+.plan-room:focus-visible {
+  outline-offset: -4px;
+}
+.plan-room-round {
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--u) * 20) calc(var(--u) * 10) 0;
+  text-align: center;
+  clip-path: circle(50%);
+}
+.plan-room-name {
+  font-family: var(--font-sc);
+  font-size: max(11px, calc(var(--u) * 11.5));
+  letter-spacing: 0.16em;
+  line-height: 1.3;
+  color: var(--color-ink-soft);
+}
+.plan-room-round .plan-room-name {
+  font-size: max(10.5px, calc(var(--u) * 10.5));
+  letter-spacing: 0.06em;
+}
+/* What's inside a tower, written just below it */
+.plan-note {
+  position: absolute;
+  margin: 0;
+  width: calc(var(--u) * 200);
+  text-wrap: balance;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: max(13px, calc(var(--u) * 14));
+  line-height: 1.25;
+  color: var(--color-ink-soft);
+  pointer-events: none;
+}
+.plan-room-numeral {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.3em;
+  letter-spacing: 0;
+  color: var(--color-blood);
+}
+.plan-room-plain {
+  margin-top: calc(var(--u) * 3);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: max(12px, calc(var(--u) * 17));
+  line-height: 1.1;
+  transition: color 0.3s;
+}
+.plan-room:hover .plan-room-plain,
+.plan-room:focus-visible .plan-room-plain {
+  color: var(--color-blood);
+}
+.plan-room-peek {
+  margin-top: calc(var(--u) * 6);
+  max-width: calc(var(--u) * 270);
+  text-wrap: balance;
+  font-family: var(--font-hand);
+  font-size: max(13px, calc(var(--u) * 14));
+  line-height: 1.25;
+  color: var(--color-ink-soft);
+}
+.plan-room-enter {
+  margin-top: auto;
+  align-self: flex-end;
+  font-family: var(--font-hand);
+  font-size: max(11px, calc(var(--u) * 15));
+  color: var(--color-blood);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+.plan-room:hover .plan-room-enter,
+.plan-room:focus-visible .plan-room-enter {
+  opacity: 1;
+  transform: none;
+}
+
+/* The name scroll over Manthan's footprints */
+.plan-banner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  pointer-events: none;
+  white-space: nowrap;
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 8);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: max(10px, calc(var(--u) * 11.5));
+  line-height: 1.2;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  border: 1px solid var(--ink-line);
+  box-shadow:
+    inset 0 0 0 2px var(--color-paper),
+    inset 0 0 0 2.6px rgb(43 27 16 / 0.45);
+  transition: transform 0.4s linear;
+  will-change: transform;
+}
+
+/* Map furniture: compass, entrance, key */
+.plan-compass {
+  position: absolute;
+  left: 86.2%;
+  top: 1%;
+  width: calc(var(--u) * 134);
+}
+.plan-compass-caption {
+  margin: calc(var(--u) * 4) 0 0;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: max(12px, calc(var(--u) * 12.5));
+  line-height: 1.2;
+  color: var(--color-ink-soft);
+}
+.plan-entrance {
+  position: absolute;
+  left: 42.41%;
+  top: 93.6%;
+  margin: 0;
+  transform: translateX(-50%);
+  font-size: max(10.5px, calc(var(--u) * 10.5));
+  color: var(--color-ink-faint);
+}
+.plan-key p {
+  margin: 0;
+}
+.plan-key-title {
+  margin-bottom: 4px !important;
+  font-size: 10.5px;
+  color: var(--color-ink-faint);
+}
+.plan-key-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+}
+.plan-key-row svg {
+  width: 22px;
+  height: 14px;
+  flex: none;
+}
+.plan-wide .plan-key {
+  position: absolute;
+  left: calc(var(--u) * 22);
+  top: 87.5%;
+}
+.plan-wide .plan-key-title {
+  font-size: max(10.5px, calc(var(--u) * 10.5));
+}
+.plan-wide .plan-key-row {
+  font-size: max(12.5px, calc(var(--u) * 13.5));
+}
+
+/* The work Manthan is proudest of, pinned to the plan */
+.plan-spotlight {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px 15px;
+  color: var(--color-ink);
+  text-decoration: none;
+  background: #f6ecd3;
+  box-shadow: 2px 5px 12px rgb(43 27 16 / 0.22);
+  transform: rotate(-0.8deg);
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+.plan-spotlight:hover,
+.plan-spotlight:focus-visible {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: 3px 8px 16px rgb(43 27 16 / 0.26);
+}
+.plan-spotlight-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 96px;
+  height: 22px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgb(238 226 196 / 0.75);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+  clip-path: polygon(2% 8%, 98% 0, 100% 92%, 0 100%);
+}
+.plan-spotlight-figure {
+  font-family: var(--font-display);
+  font-size: 58px;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  color: var(--color-blood);
+}
+.plan-spotlight-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.plan-spotlight-kicker {
+  font-size: 11.5px;
+  color: var(--color-blood);
+}
+.plan-spotlight-role {
+  margin-top: 3px;
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.1;
+}
+.plan-spotlight-where {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--color-ink-soft);
+}
+.plan-spotlight-line {
+  margin-top: 5px;
+  font-family: var(--font-hand);
+  font-size: 15px;
+  line-height: 1.25;
+  color: var(--color-ink-soft);
+}
+.plan-spotlight-more {
+  white-space: nowrap;
+  color: var(--color-blood);
+}
+.plan-tall-spotlight {
+  max-width: 460px;
+  margin: 30px auto 0;
+}
+.plan-wide-spotlight {
+  position: absolute;
+  left: 38.6%;
+  top: -0.6%;
+  width: calc(var(--u) * 500);
+}
+@media (min-width: 1024px) {
+  .plan-tall-spotlight {
+    display: none;
+  }
+  .plan-wide-spotlight .plan-spotlight {
+    gap: calc(var(--u) * 16);
+    padding: calc(var(--u) * 13) calc(var(--u) * 18) calc(var(--u) * 12);
+  }
+  .plan-wide-spotlight .plan-spotlight-figure {
+    font-size: calc(var(--u) * 60);
+  }
+  .plan-wide-spotlight .plan-spotlight-kicker {
+    font-size: max(11px, calc(var(--u) * 11));
+  }
+  .plan-wide-spotlight .plan-spotlight-role {
+    font-size: max(14px, calc(var(--u) * 21));
+  }
+  .plan-wide-spotlight .plan-spotlight-where {
+    font-size: max(11.5px, calc(var(--u) * 14));
+  }
+  .plan-wide-spotlight .plan-spotlight-line {
+    font-size: max(13px, calc(var(--u) * 14.5));
+  }
+}
+/* On the portrait plan the towers sit near the edges, so keep their notes narrower. */
+.plan-tall .plan-note {
+  width: calc(var(--u) * 190);
 }
